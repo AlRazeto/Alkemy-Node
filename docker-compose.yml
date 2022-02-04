@@ -1,0 +1,19 @@
+services:
+  disneydb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=disney_db
+      - POSTGRES_USER=alejo
+      - POSTGRES_PASSWORD=yacopacomaco
+    ports:
+      - 5432:54432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=alejorazeto@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=yacopacomaco
+    ports:
+      - 5050:80
