@@ -29,4 +29,14 @@ const UserSchema = {
     }
 }
 
-class User extends Model{}
+class User extends Model{
+    static options(sequelize){
+        return{
+            sequelize,
+            tableName : CHARACTER_TABLE,
+            modelName : 'User'
+        }
+    }
+}
+
+module.exports = {CHARACTER_TABLE, UserSchema, User}
