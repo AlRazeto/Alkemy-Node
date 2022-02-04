@@ -1,5 +1,5 @@
 const express = require('express')
-const conect = require('../libs/sequelize')
+const sequelize = require('./../libs/sequelize')
 
 class CharacterService{
     constructor(){
