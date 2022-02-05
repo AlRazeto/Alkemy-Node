@@ -1,9 +1,9 @@
 const {Sequelize, Model, DataTypes} = require('sequelize')
 
-const CHARACTER_TABLE = 'characters'
+const MOVIE_TABLE = 'movies'
 
-const CharacterSchema = {
-    name : {
+const MovieSchema = {
+    title : {
         allowNull: false,
         type: DataTypes.STRING,
     },
@@ -11,32 +11,31 @@ const CharacterSchema = {
         allowNull: false,
         type: DataTypes.BLOB
     },
-    age : {
+    releaseDate : {
         allowNull: false,
         type: DataTypes.INTEGER
     },
-    weigth : {
+    rating : {
         allowNull: false,
         type: DataTypes.INTEGER
     },
-    movies : {
+    characters : {
         allowNull: false,
         type: DataTypes.ARRAY(DataTypes.JSON)
     },
-    info : {
-        allowNull: false,
-        type: DataTypes.STRING
+    genre : {
+        // rellenar después
     }
 }
 
-class Character extends Model{
+class Movie extends Model{
     static options(sequelize){
         return{
             sequelize,
-            tableName : CHARACTER_TABLE,
-            modelName : 'Characters'
+            tableName : MOVIE_TABLE,
+            modelName : 'Movie'
         }
     }
 }
 
-module.exports = {CHARACTER_TABLE, CharacterSchema, Character}
+module.exports = {MOVIE_TABLE, MovieSchema, Movie}
