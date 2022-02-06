@@ -4,7 +4,11 @@
   "description": "Intento del Proyecto de Disney propuesto por alkemy",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "migration:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:clear": "sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,7 @@
     "nodemon": "^2.0.15",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.15.0"
+    "sequelize": "^6.15.0",
+    "sequelize-cli": "^6.4.1"
   }
 }

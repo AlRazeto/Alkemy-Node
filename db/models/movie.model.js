@@ -24,7 +24,8 @@ const MovieSchema = {
         type: DataTypes.ARRAY(DataTypes.JSON)
     },
     genre : {
-        // rellenar después
+        allowNull: false,
+        type: DataTypes.STRING
     }
 }
 
