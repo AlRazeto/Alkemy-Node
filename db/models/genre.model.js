@@ -6,6 +6,7 @@ const GenreSchema = {
     name : {
         allowNull: false,
         type: DataTypes.STRING,
+        primaryKey: true
     },
     image : {
         allowNull: false,

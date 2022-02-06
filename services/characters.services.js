@@ -1,6 +1,5 @@
 const express = require('express')
 const {models} = require('./../libs/sequelize')
-const  {Op} = require('sequelize')
 
 class CharacterService {
     constructor(){

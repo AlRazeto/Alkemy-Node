@@ -6,6 +6,7 @@ const CharacterSchema = {
     name : {
         allowNull: false,
         type: DataTypes.STRING,
+        primaryKey: true
     },
     image : {
         allowNull: false,
@@ -34,7 +35,10 @@ class Character extends Model{
         return{
             sequelize,
             tableName : CHARACTER_TABLE,
-            modelName : 'Characters'
+            modelName : 'Characters',
+            timestamps : false,
+            createdAt : false,
+            updatedAt : false,
         }
     }
 }
