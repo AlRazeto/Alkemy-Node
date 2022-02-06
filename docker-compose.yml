@@ -2,9 +2,9 @@ services:
   disneydb:
     image: postgres
     environment:
-      - POSTGRES_DB=disney_db
-      - POSTGRES_USER=alejo
-      - POSTGRES_PASSWORD=yacopacomaco
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - 5432:5432
     volumes:
@@ -13,7 +13,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=alejorazeto@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=yacopacomaco
+      - PGADMIN_DEFAULT_EMAIL=${PGA_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${DB_PASSWORD}
     ports:
       - 5050:80
