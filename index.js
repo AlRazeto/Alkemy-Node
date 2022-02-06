@@ -1,7 +1,7 @@
 const express = require('express');
 const sequelize = require('./libs/sequelize');
 const routerAPI = require('./routes/index');
-const {errorHandler, logError} = require('./middlewares/error.middleware');
+const {errorHandler, logError, boomErrorHandler} = require('./middlewares/error.middleware');
 
 const app = express();
 const port = 8080;
@@ -13,6 +13,7 @@ app.get('/', (req, res)=>{
 //routing
 
 app.use(logError);
+app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, async()=>{
