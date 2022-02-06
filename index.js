@@ -11,6 +11,7 @@ app.get('/', (req, res)=>{
 });
 
 //routing
+routerAPI(app)
 
 app.use(logError);
 app.use(boomErrorHandler);

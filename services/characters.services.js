@@ -2,7 +2,7 @@ const express = require('express')
 const {models} = require('./../libs/sequelize')
 const  {Op} = require('sequelize')
 
-class CharacterService{
+class CharacterService {
     constructor(){
 
     }
@@ -13,15 +13,20 @@ class CharacterService{
         const response = await models.Characters.findAll()
         return response
     };
-    async getGroup(id){
+    async getByMovie(id){
         const response = await models.Characters.findAll({
             where:{
-                [Op.or]:[
-                    {movie: id},
-                    {age :id},
-                ]
+                movie: id
             }
         })
+        return response
+    };
+    async getByAge(id){
+        const response = await models.Characters.findAll({
+            where:{
+                age: id
+            },
+        });
         return response
     };
     async getOne(id){
@@ -33,7 +38,6 @@ class CharacterService{
         return response
     };
     async update(id, data){
-        const char = await this.getOne(id)
         await modles.Characters.update(data, {
             where:{name: id}
         })
@@ -46,3 +50,5 @@ class CharacterService{
         });
     };
 };
+
+module.exports = CharacterService
