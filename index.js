@@ -14,8 +14,7 @@ app.get('/', (req, res)=>{
     console.log('listening')
 });
 
-//routing
-routerAPI(app)
+routerAPI(app);
 
 app.use(logError);
 app.use(boomErrorHandler);

@@ -1,4 +1,4 @@
-const { Boom } = require('@hapi/boom');
+const  boom  = require('@hapi/boom');
 const express = require('express')
 const {models} = require('./../libs/sequelize')
 
@@ -18,7 +18,7 @@ class MovieService{
         }else if(ord=='DESC'){
             return sortedMovies.reverse()
         }else{
-            throw Boom.badRequest('invalid query value for order')
+            throw boom.badRequest('invalid query value for order')
         }
         ;
     }
@@ -27,7 +27,7 @@ class MovieService{
             include: ['genre_movies']
         });
         if(!genre){
-            throw Boom.notFound('genre not found')
+            throw boom.notFound('genre not found')
         }else{
             return genre.movies
         };
@@ -35,7 +35,7 @@ class MovieService{
     async getOne(id){
         const movie = await models.Movie.findByPk(id);
         if(!movie){
-            throw Boom.notFound('movie not found')
+            throw boom.notFound('movie not found')
         }else{
             return movie
         }

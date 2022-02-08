@@ -1,12 +1,13 @@
 const express = require('express');
 const MovieService = require('./../services/movies.services')
+const boom = require('@hapi/boom')
 
 const router = express.Router();
 const service= new MovieService()
 
 router.get('/', async(req, res, next)=>{
     try{
-        if(req.query){
+        if(/\?.+/.test(req.url)){
             const {order, genre, name} = req.query
             if(name){
                 const rta = await service.getOne(name)
@@ -19,7 +20,10 @@ router.get('/', async(req, res, next)=>{
             else if(age){
                 const rta = await service.getAllOrd(order)
                 res.json(rta);
-            };
+            }
+            else{
+                throw boom.badRequest('invalid query')
+            }
         }
         else{
             const rta= await service.getAll()

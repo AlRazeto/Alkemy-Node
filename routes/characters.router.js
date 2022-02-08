@@ -1,8 +1,8 @@
-const { boom, Boom } = require('@hapi/boom');
+const  boom  = require('@hapi/boom');
 const express = require('express');
 const Service = require('./../services/characters.services');
-const {createCharacterSchema, updateCharacterSchema} = require('./../schemas/character.schemas')
-const validatorMiddleware = require('./../middlewares/schema.validator')
+// const {createCharacterSchema, updateCharacterSchema} = require('./../schemas/character.schemas')
+// const validatorMiddleware = require('./../middlewares/schema.validator')
 
 const router = express.Router();
 const service = new Service();
@@ -10,7 +10,7 @@ const service = new Service();
 
 router.get('/',async (req,res,next)=>{
     try{
-        if(req.query =={}){
+        if(/\?.+/.test(req.url)){
             const {age, movies, name} = req.query
             if(name){
                 const rta = await service.getOne(name)
@@ -24,7 +24,7 @@ router.get('/',async (req,res,next)=>{
                 const rta = await service.getByAge(age)
                 res.json(rta);
             }else{
-                throw Boom.badRequest('invalid query')
+                throw boom.badRequest('invalid query')
             };
         }
         else{
@@ -33,7 +33,7 @@ router.get('/',async (req,res,next)=>{
         };
     }catch(err){
         next(err)
-    }
+    };
 });
 
 router.post('/',

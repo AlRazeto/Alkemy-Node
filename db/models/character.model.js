@@ -38,7 +38,10 @@ const CharacterSchema = {
 
 class Character extends Model{
     static associate(models){
-
+        this.hasMany(models.Movie, {
+            as: 'in_movie',
+            foreignKey: 'title'
+        });
     }
     static options(sequelize){
         return{
