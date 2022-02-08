@@ -7,9 +7,10 @@ const validatorMiddleware = require('./../middlewares/schema.validator')
 const router = express.Router();
 const service = new Service();
 
+
 router.get('/',async (req,res,next)=>{
     try{
-        if(req.query){
+        if(req.query =={}){
             const {age, movies, name} = req.query
             if(name){
                 const rta = await service.getOne(name)
@@ -36,11 +37,10 @@ router.get('/',async (req,res,next)=>{
 });
 
 router.post('/',
-//validatorMiddleware(createCharacterSchema, 'body'),
+//validatorMiddleware(createCharacterSchema, 'body'),---> ver los validators
 async(req,res,next)=>{
     try{
         const body = req.body;
-        console.log(req)
         const newCharacter = await service.create(body);
         res.status(201).json(newCharacter)
     }catch(err){
@@ -49,7 +49,7 @@ async(req,res,next)=>{
 });
 
 router.patch('/:name',
-validatorMiddleware(updateCharacterSchema, 'body'),
+//validatorMiddleware(updateCharacterSchema, 'body'),
 async(req,res,next)=>{
     try{
         const {name}= req.params;
@@ -62,7 +62,7 @@ async(req,res,next)=>{
 });
 
 router.put('/:name',
-validatorMiddleware(updateCharacterSchema, 'body'),
+//validatorMiddleware(updateCharacterSchema, 'body'),
 async(req,res,next)=>{
     try{
         const {name}= req.params;
@@ -78,6 +78,7 @@ router.delete('/:name',(req,res,next)=>{
     try{
         const {name} = req.params;
         service.delete(name);
+        res.json({name})
     }catch(err){
         next(err)
     }

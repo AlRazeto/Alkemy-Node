@@ -2,9 +2,13 @@ const express = require('express');
 const sequelize = require('./libs/sequelize');
 const routerAPI = require('./routes/index');
 const {errorHandler, logError, boomErrorHandler} = require('./middlewares/error.middleware');
+const bodyParser =require('body-parser')
 
 const app = express();
 const port = 8080;
+
+app.use(bodyParser.json()); // body en formato json
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res)=>{
     console.log('listening')
