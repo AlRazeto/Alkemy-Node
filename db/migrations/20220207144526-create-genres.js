@@ -11,4 +11,3 @@ module.exports = {
     await queryInterface.dropTable(GENRE_TABLE)
   }
 };
-

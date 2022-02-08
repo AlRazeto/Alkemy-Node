@@ -1,3 +1,4 @@
+const { Boom } = require('@hapi/boom')
 const express = require('express')
 const {models} = require('./../libs/sequelize')
 
@@ -5,8 +6,9 @@ class CharacterService {
     constructor(){
 
     }
-    create(data){
-        models.Characters.create(data)    
+    async create(data){
+        const newChar= await models.Characters.create(data)
+        return newChar   
     };
     async getAll(){
         const response = await models.Characters.findAll()
@@ -14,39 +16,51 @@ class CharacterService {
     };
     async getByMovie(id){
         const response = await models.Characters.findAll({
-            where:{
-                movie: id
-            }
+            where:{ movie: id }
         })
+        if(!response){
+            throw Boom.notFound('no one in that movie or movie does not exist')
+        }
+        else{
         return response
+        };
     };
     async getByAge(id){
         const response = await models.Characters.findAll({
-            where:{
-                age: id
-            },
+            where:{ age: id },
         });
+        if(!response){
+            throw Boom.notFound('no one with that age was found')
+        }
+        else{
         return response
+        };
     };
     async getOne(id){
-        const response = await models.Characters.findOne({
-            where:{
-                name: id
-            }
-        })
+        const response = await models.Characters.findByPk(id);
+        if(!response){
+            throw Boom.notFound('character not found')
+        }
+        else{
         return response
+        };
     };
-    async update(id, data){
-        await modles.Characters.update(data, {
+    update(id, data){
+        models.Characters.update(data, {
             where:{name: id}
         })
+        .then(async()=>{
+            const updated = await models.Characters.findByPk(id);
+            return updated
+        })
+        .catch(err=>{throw Boom.notFound('update failed: no character with that name')});
     };
-    async delete(id){
-        await models.Characters.destroy({
-            where:{
-                name: id
-            }
-        });
+    delete(id){
+        models.Characters.destroy({
+            where:{ name: id }
+        })
+        .then()
+        .catch(err=>{throw Boom.notFound('update failed: no character with that name')});
     };
 };
 

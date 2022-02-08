@@ -14,16 +14,32 @@ const GenreSchema = {
     },
     movies : {
         allowNull: false,
-        type: DataTypes.ARRAY(DataTypes.JSON)
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        refrence: {
+            model: 'movies',
+            key: 'title'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
     },
 }
 
 class Genre extends Model{
+    static associate(models){
+        this.hasMany(models.Movie, {
+            as: 'movie_genre',
+            foreignKey: 'title'
+        });
+    }
+
     static options(sequelize){
         return{
             sequelize,
             tableName : GENRE_TABLE,
-            modelName : 'Genre'
+            modelName : 'Genre',
+            timestamps : false,
+            createdAt : false,
+            updatedAt : false,
         }
     }
 }

@@ -10,7 +10,7 @@ const CharacterSchema = {
     },
     image : {
         allowNull: false,
-        type: DataTypes.BLOB
+        type: DataTypes.STRING
     },
     age : {
         allowNull: false,
@@ -22,7 +22,13 @@ const CharacterSchema = {
     },
     movies : {
         allowNull: false,
-        type: DataTypes.ARRAY(DataTypes.JSON)
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        refrence:{
+            model: 'movies',
+            key: 'title',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
     },
     info : {
         allowNull: false,
@@ -31,6 +37,9 @@ const CharacterSchema = {
 }
 
 class Character extends Model{
+    static associate(models){
+
+    }
     static options(sequelize){
         return{
             sequelize,
