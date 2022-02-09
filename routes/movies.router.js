@@ -45,9 +45,9 @@ router.post('/', async(req, res, next)=>{
     };
 })
 
-router.put('/', async(req, res, next)=>{
+router.put('/:name', async(req, res, next)=>{
     try{
-        const {name} = req.query;
+        const {name} = req.params;
         const body = req.body;
         const updated = await service.update(name, body)
         res.json(updated)
@@ -56,9 +56,9 @@ router.put('/', async(req, res, next)=>{
     };
 });
 
-router.patch('/', async(req, res, next)=>{
+router.patch('/:name', async(req, res, next)=>{
     try{
-        const {name} = req.query;
+        const {name} = req.params;
         const body = req.body;
         const updated = await service.update(name, body)
         res.json(updated)
@@ -67,10 +67,11 @@ router.patch('/', async(req, res, next)=>{
     }
 });
 
-router.delete('/', (req, res, next)=>{
+router.delete('/:name', (req, res, next)=>{
     try{
-        const {name} = req.query;
-        service.delete(name)
+        const {name} = req.params;
+        const done = service.delete(name)
+        res.json(done)
     }catch(err){
         next(err)
     };

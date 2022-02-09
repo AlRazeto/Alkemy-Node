@@ -49,6 +49,25 @@ class MovieService{
                 movies : data.title,
                 actors : actor 
             });
+            const target = await models.Characters.findByPk(actor)
+            console.log('-------------------------')
+            console.log(actor)
+            console.log(target)
+            console.log(target.movies)
+            console.log('-------------------------')
+            if(!target){
+                console.warn(actor +' does not exist yet')
+            }else if(target.movies.includes(data.title)){
+                console.log(actor+" up to date")
+            }
+            else{
+                target.update({
+                    movies :[
+                        ...target.movies,
+                        data.title
+                    ]
+                });
+            }
         }
         return newMovie
     }
@@ -56,6 +75,25 @@ class MovieService{
         const updated = await models.Movies.update(data, {
             where: { title: id }
         });
+        if(data.characters){
+            models.CharacterMovie.destroy({
+                where: {movies: id}
+            })
+            .then(()=>{
+                for(const actor of data.characters){
+                    models.CharacterMovie.create({
+                        movies: id,
+                        actors: actor
+                    });
+                };
+            })
+            .catch(err=>{
+                console.error(err)
+            });
+        }
+        if(!updated){
+            throw boom.notFound('movie not found');
+        }
         return updated
         
     }
@@ -63,8 +101,12 @@ class MovieService{
         models.Movie.destroy({
             where: { title: id }
         })
-        .then()
-        .catch(err=>{console.error(err)})
+        .then(()=>{
+            return {id}
+        })
+        .catch(err=>{
+            console.error(err)
+        });
     }
 };
 
