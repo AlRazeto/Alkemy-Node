@@ -37,6 +37,7 @@ router.get('/', async(req, res, next)=>{
 router.post('/', async(req, res, next)=>{
     try{
         const body = req.body;
+        console.log(req.body)
         const newMovie = await service.create(body);
         res.status(201).json(newMovie)
     }catch(err){

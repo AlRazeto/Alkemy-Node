@@ -8,10 +8,19 @@ class CharacterService {
     }
     async create(data){
         const newChar= await models.Characters.create(data)
+        for(const movie of data.movies){
+            console.log(data.name)
+            await models.CharacterMovie.create({
+                movies: movie,
+                actors: data.name
+            })
+        }
         return newChar   
     };
     async getAll(){
-        const response = await models.Characters.findAll()
+        const response = await models.Characters.findAll({
+            include: 'moviesIn'
+        })
         return response
     };
     async getByMovie(id){

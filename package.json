@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "nodemon index.js",
     "migration:generate": "sequelize-cli migration:generate --name",
-    "migrations:run": "sequelize-cli db:migrate",
-    "migrations:revert": "sequelize-cli db:migrate:undo",
-    "migrations:clear": "sequelize-cli db:migrate:undo:all"
+    "migration:run": "sequelize-cli db:migrate",
+    "migration:revert": "sequelize-cli db:migrate:undo",
+    "migration:clear": "sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",

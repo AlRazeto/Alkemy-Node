@@ -7,7 +7,9 @@ class MovieService{
 
     }
     async getAll(){
-        const movies = await models.Movie.findAll();
+        const movies = await models.Movie.findAll({
+            include: 'actors'
+        });
         return movies
     }
     async getAllOrd(ord){
@@ -42,6 +44,12 @@ class MovieService{
     }
     async create(data){
         const newMovie = await models.Movie.create(data);
+        for (const actor of data.characters){
+            models.CharacterMovie.create({
+                movies : data.title,
+                actors : actor 
+            });
+        }
         return newMovie
     }
     async update(id, data){

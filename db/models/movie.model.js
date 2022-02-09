@@ -10,7 +10,7 @@ const MovieSchema = {
     },
     image : {
         allowNull: false,
-        type: DataTypes.BLOB
+        type: DataTypes.STRING,
     },
     releaseDate : {
         allowNull: false,
@@ -23,33 +23,22 @@ const MovieSchema = {
     characters : {
         allowNull: false,
         type: DataTypes.ARRAY(DataTypes.STRING),
-        refrence: {
-            model: 'characters',
-            key: 'name',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-    },
-    genre : {
-        allowNull: false,
-        type: DataTypes.STRING,
-        refrence: {
-            model: 'genres',
-            key: 'name',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
     },
 }
 
 class Movie extends Model{
     static associate(models){
-        this.belongsTo(models.Genre, {as: 'genre_movie'});
+        this.belongsToMany(models.Genre, {
+            as: 'genre',
+            through: models.MovieGenre,
+            foreignKey: 'movies',
+            otherKey:'genres',
+        });
         this.belongsToMany(models.Characters,{
-            as: 'movies',
+            as: 'actors',
             through: models.CharacterMovie,
-            foreignKey: 'title',
-            otherKey: 'actor',
+            foreignKey: 'movies',
+            otherKey: 'actors',
         });
     }
     static options(sequelize){

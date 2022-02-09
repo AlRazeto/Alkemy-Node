@@ -23,12 +23,6 @@ const CharacterSchema = {
     movies : {
         allowNull: false,
         type: DataTypes.ARRAY(DataTypes.STRING),
-        refrence:{
-            model: 'movies',
-            key: 'title',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
     },
     info : {
         allowNull: false,
@@ -38,10 +32,12 @@ const CharacterSchema = {
 
 class Character extends Model{
     static associate(models){
-        this.hasMany(models.Movie, {
-            as: 'in_movie',
-            foreignKey: 'title'
-        });
+        this.belongsToMany(models.Movie, {
+            through: models.CharacterMovie,
+            as:'moviesIn',
+            foreignKey: 'actors',
+            otherKey: 'movies'
+        })
     }
     static options(sequelize){
         return{

@@ -1,11 +1,11 @@
 const {Sequelize, Model, DataTypes} = require('sequelize');
 
-const CHARACTER_MOVIE_TABLE = 'character_movies';
+const MOVIE_GENRE_TABLE = 'movies-genres';
 
-const CharacterMovieSchema = {
+const MovieGenreSchema = {
     movies : {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         refrence: {
             model: 'movies',
             key: 'title'
@@ -13,9 +13,9 @@ const CharacterMovieSchema = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
     },
-    actors : {
+    genres : {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         refrence: {
             model: 'characters',
             key: 'name'
@@ -25,16 +25,14 @@ const CharacterMovieSchema = {
     },
 };
 
-class CharacterMovie extends Model{
-    static associate(models){
-        
-    };
+class MovieGenre extends Model{
+    static associate(models){};
     
     static options(sequelize){
         return{
             sequelize,
-            tableName : CHARACTER_MOVIE_TABLE,
-            modelName : 'CharacterMovie',
+            tableName : MOVIE_GENRE_TABLE,
+            modelName : 'MovieGenre',
             timestamps : false,
             createdAt : false,
             updatedAt : false,
@@ -42,4 +40,4 @@ class CharacterMovie extends Model{
     };
 };
 
-module.exports= {CHARACTER_MOVIE_TABLE, CharacterMovie, CharacterMovieSchema}
+module.exports= {MOVIE_GENRE_TABLE, MovieGenre, MovieGenreSchema}
