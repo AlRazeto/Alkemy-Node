@@ -13,8 +13,8 @@ const GenreSchema = {
         type: DataTypes.BLOB
     },
     movies : {
-        allowNull: false,
         type: DataTypes.ARRAY(DataTypes.STRING),
+        unique: true
     },
 };
 

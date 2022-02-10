@@ -136,7 +136,7 @@ class CharacterService {
             return {name : id}
         })
         .catch(err=>{
-            console.error(err)
+            throw boom.notFound('chatacter not found')
         });
     };
 };

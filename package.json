@@ -8,7 +8,11 @@
     "migration:generate": "sequelize-cli migration:generate --name",
     "migration:run": "sequelize-cli db:migrate",
     "migration:revert": "sequelize-cli db:migrate:undo",
-    "migration:clear": "sequelize-cli db:migrate:undo:all"
+    "migration:clear": "sequelize-cli db:migrate:undo:all",
+    "seed:generate": "sequelize-cli seed:generate --name",
+    "seed:run": "npx sequelize-cli db:seed:all",
+    "seed:revert":"npx sequelize-cli db:seed:undo",
+    "seed:clear":"sequelize-cli db:seed:undo:all"
   },
   "repository": {
     "type": "git",

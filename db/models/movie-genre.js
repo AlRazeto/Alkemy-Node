@@ -5,7 +5,7 @@ const MOVIE_GENRE_TABLE = 'movies-genres';
 const MovieGenreSchema = {
     movies : {
         allowNull: false,
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         refrence: {
             model: 'movies',
             key: 'title'
@@ -15,7 +15,7 @@ const MovieGenreSchema = {
     },
     genres : {
         allowNull: false,
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         refrence: {
             model: 'characters',
             key: 'name'

@@ -17,7 +17,7 @@ router.get('/', async(req, res, next)=>{
                 const rta = await service.getbyGenre(genre)
                 res.json(rta);
             }
-            else if(age){
+            else if(order){
                 const rta = await service.getAllOrd(order)
                 res.json(rta);
             }
@@ -44,24 +44,32 @@ router.post('/', async(req, res, next)=>{
     };
 })
 
-router.put('/:name', async(req, res, next)=>{
+router.put('/:name/:genre', async(req, res, next)=>{
     try{
-        const {name} = req.params;
+        const {name, genre} = req.params;
         const body = req.body;
-        const updated = await service.update(body, name)
-        res.json(updated)
+        if(name && !genre){
+            const updated = await service.update(body, name);
+            res.json(updated);
+        }else if(name && genre){
+            const addGenre= await service.servicesGenre(body, name, genre);
+        }
     }catch(err){
         next(err)
-    };
+    }
 });
 
-router.patch('/:name', async(req, res, next)=>{
+router.patch('/:name/:genre', async(req, res, next)=>{
     try{
-        const {name} = req.params;
+        const {name, genre} = req.params;
         const body = req.body;
-        console.log(body);
-        const updated = await service.update(body, name);
-        res.json(updated);
+        if(name && !genre){
+            const updated = await service.update(body, name);
+            res.json(updated);
+        }else if(name && genre){
+            const addGenre= await service.servicesGenre(body, name, genre);
+            res.status(201).json(addGenre)
+        }
     }catch(err){
         next(err)
     }

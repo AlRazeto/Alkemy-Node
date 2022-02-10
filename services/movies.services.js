@@ -55,24 +55,28 @@ class MovieService{
     }
     async getAllOrd(ord){
         const movies = await models.Movie.findAll();
-        const sortedMovies = movies.sort((a,b)=>a.title.localCompare(b.title));
+        console.log(movies)
+        movies.sort(async(a,b)=>{
+            let first = await a.getDataValue('title');
+            let second=await b.getDataValue('title');
+            ()=>first.localCompare(second);
+        });
         if(ord=='ABC'){
-            return sortedMovies
+            return movies
         }else if(ord=='DESC'){
-            return sortedMovies.reverse()
+            return movies.reverse()
         }else{
             throw boom.badRequest('invalid query value for order')
-        }
-        ;
+        };
     }
     async getbyGenre(gen){
         const genre = await models.Genre.findByPk(gen,{
-            include: ['genre_movies']
+            include: ['genreMovies']
         });
         if(!genre){
             throw boom.notFound('genre not found')
         }else{
-            return genre.movies
+            return genre.genreMovies
         };
     }
     async getOne(id){
@@ -137,9 +141,60 @@ class MovieService{
             return {movie : id}
         })
         .catch(err=>{
-            console.error(err)
+            throw boom.notFound('movie not found')
         });
     }
+    async servicesGenre(data, movie, service){
+        const exists = await models.Movie.findByPk(movie)
+        if(!exists){
+            throw boom.notFound('movie not found');
+        }else{
+            if(service=="add"){
+                for(const genre of data.genre){
+                    const target = await models.Genre.findByPk(genre)
+                    if(!target){
+                        throw boom.notFound(genre+ ' not found')
+                    };
+                    if(target.movies.includes(movie)){
+                        throw boom.conflict('movie is alredy in genre')
+                    }else{
+                        await models.Genre.update({
+                            movies:[...target.movies, movie]
+                        },{
+                            where: {name : genre}
+                        })
+                        await models.MovieGenre.create({
+                            movies: movie,
+                            genres: genre
+                        });
+                    }
+                }
+                return await models.Genre.findAll()
+            }else if(service=="remove"){
+                for(const genre of data.genre){
+                    const target = await models.Genre.findByPk(genre)
+                    if(!target){
+                        throw boom.notFound(genre +' not found')
+                    };
+                    if(target.movies.includes(movie)){
+                        target.movies.splice(target.movies.indexOf(movie))
+                        await models.Genre.update({
+                            movies:target.movies
+                        },{
+                            where: {name : genre}
+                        })
+                        await models.MovieGenre.destroy({
+                            where:{movies: movie}
+                        });
+                    }else{
+                        console.log(movie +' was not in '+genre)
+                    }
+                }
+            }else{
+                throw boom.badRequest('invalid parameter')
+            }
+        };
+    };
 };
 
 module.exports= MovieService
