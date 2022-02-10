@@ -37,7 +37,6 @@ router.get('/', async(req, res, next)=>{
 router.post('/', async(req, res, next)=>{
     try{
         const body = req.body;
-        console.log(req.body)
         const newMovie = await service.create(body);
         res.status(201).json(newMovie)
     }catch(err){
@@ -49,7 +48,7 @@ router.put('/:name', async(req, res, next)=>{
     try{
         const {name} = req.params;
         const body = req.body;
-        const updated = await service.update(name, body)
+        const updated = await service.update(body, name)
         res.json(updated)
     }catch(err){
         next(err)
@@ -60,8 +59,9 @@ router.patch('/:name', async(req, res, next)=>{
     try{
         const {name} = req.params;
         const body = req.body;
-        const updated = await service.update(name, body)
-        res.json(updated)
+        console.log(body);
+        const updated = await service.update(body, name);
+        res.json(updated);
     }catch(err){
         next(err)
     }
