@@ -1,13 +1,14 @@
-const boom = require('@hapi/boom')
+const boom = require('@hapi/boom');
 
-function validatorMiddleware(schema){
-    return (req,res, next)=>{
-        const error = schema.validate(req.body);
-        if (error){
-            next(boom.badRequest(error));
-        };
-        next();
-    };
-};
+function validatorHandler(schema) {
+  return (req, res, next) => {
+    const data = req.body;
+    const { error } = schema.validate(data, { abortEarly: false });
+    if (error) {
+      next(boom.badRequest(error));
+    }
+    next();
+  }
+}
 
-module.exports= validatorMiddleware
+module.exports = validatorHandler;

@@ -3,7 +3,7 @@ const Joi = require('joi')
 const name = Joi.string().alphanum();
 const age = Joi.number();
 const weigth = Joi.number();
-const movies = Joi.array().items(Joi.string().alphanum());
+const movies = Joi.array();
 const image = Joi.string();
 const info = Joi.string().max(300);
 

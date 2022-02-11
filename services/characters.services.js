@@ -52,8 +52,8 @@ class CharacterService {
         const newChar = await models.Characters.create(data);
         for (const movie of data.movies){
             models.CharacterMovie.create({
-                movies : data.title,
-                actors : actor 
+                movies : movie,
+                actors : data.name 
             });
             addToMovies(movie, data.name)
         }

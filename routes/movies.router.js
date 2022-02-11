@@ -2,6 +2,9 @@ const express = require('express');
 const MovieService = require('./../services/movies.services')
 const boom = require('@hapi/boom');
 const passport = require('passport');
+const {createMovieSchema,updateMovieSchema} = require('./../schemas/movie.schemas')
+const validatorMiddleware = require('./../middlewares/schema.validator')
+
 
 const router = express.Router();
 const service= new MovieService()
@@ -37,6 +40,7 @@ router.get('/', async(req, res, next)=>{
 
 router.post('/',
 passport.authenticate('jwt' , {session:false}),
+validatorMiddleware(createMovieSchema),
 async(req, res, next)=>{
     try{
         const body = req.body;
@@ -49,6 +53,7 @@ async(req, res, next)=>{
 
 router.put('/:name/:genre',
 passport.authenticate('jwt' , {session:false}),
+validatorMiddleware(updateMovieSchema),
  async(req, res, next)=>{
     try{
         const {name, genre} = req.params;
@@ -66,6 +71,7 @@ passport.authenticate('jwt' , {session:false}),
 
 router.patch('/:name/:genre', 
 passport.authenticate('jwt' , {session:false}),
+validatorMiddleware(updateMovieSchema),
 async(req, res, next)=>{
     try{
         const {name, genre} = req.params;
