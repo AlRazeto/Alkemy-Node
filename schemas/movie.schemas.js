@@ -5,7 +5,7 @@ const releaseDate = Joi.number();
 const rating = Joi.number().max(5).min(0)
 const characters = Joi.array();
 const image = Joi.binary();
-const genre = Joi.string();
+const genre = Joi.array();
 
 
 const  createMovieSchema = Joi.object({
