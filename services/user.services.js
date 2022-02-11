@@ -1,6 +1,10 @@
 const boom = require('@hapi/boom')
 const btcypt = require('bcrypt')
 const {models}= require('../libs/sequelize')
+const sgMail = require('@sendgrid/mail')
+const {config} = require('./../config/config')
+
+sgMail.setApiKey(config.senderKey)
 
 class UserServices{
     constructor(){
@@ -22,6 +26,28 @@ class UserServices{
             return user
         }
     }
+    async sendmail(userMail){
+        const mail = {
+            to: userMail,
+            from: 'emailparaalkemy@gmail.com',
+            subject: 'Hola, Gracias por registrarte <3',
+            text: 'ahora podes hacer login',
+        };
+        sgMail
+        .send(mail)
+        .then(() => {
+            console.log('email sent')
+        }, 
+        error => {
+            console.error(error);
+
+            if (error.response) {
+            console.error(error.response.body)
+            }
+        });
+        
+    }
+    
 };
 
 module.exports=UserServices

@@ -29,6 +29,10 @@ router.post('/register',async(req,res,next)=>{
     try {
         const body= req.body;
         const newUser=await service.create(body)
+        if(newUser){
+            console.log(newUser.email);
+            service.sendmail(newUser.email)
+        }
         res.status(201).json(newUser);
     } catch (error) {
         next(error)

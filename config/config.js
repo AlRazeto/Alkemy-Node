@@ -8,7 +8,8 @@ const config={
     dbHost:  process.env.DB_HOST,
     dbName:  process.env.DB_NAME,
     dbPort:  process.env.DB_PORT,
-    jwtSecret : process.env.JWT_SECRET
+    jwtSecret : process.env.JWT_SECRET,
+    senderKey: process.env.SENDGRID_API_KEY,
 }
 
 module.exports = {config}
