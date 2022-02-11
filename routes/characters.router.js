@@ -1,5 +1,6 @@
 const  boom  = require('@hapi/boom');
 const express = require('express');
+const passport = require('passport');
 const Service = require('./../services/characters.services');
 // const {createCharacterSchema, updateCharacterSchema} = require('./../schemas/character.schemas')
 // const validatorMiddleware = require('./../middlewares/schema.validator')
@@ -37,6 +38,7 @@ router.get('/',async (req,res,next)=>{
 });
 
 router.post('/',
+passport.authenticate('jwt' , {session:false}),
 //validatorMiddleware(createCharacterSchema, 'body'),---> ver los validators
 async(req,res,next)=>{
     try{
@@ -49,6 +51,7 @@ async(req,res,next)=>{
 });
 
 router.patch('/:name',
+passport.authenticate('jwt' , {session:false}),
 //validatorMiddleware(updateCharacterSchema, 'body'),
 async(req,res,next)=>{
     try{
@@ -62,6 +65,8 @@ async(req,res,next)=>{
 });
 
 router.put('/:name',
+passport.authenticate('jwt' , {session:false}),
+
 //validatorMiddleware(updateCharacterSchema, 'body'),
 async(req,res,next)=>{
     try{
@@ -74,7 +79,9 @@ async(req,res,next)=>{
     };
 });
 
-router.delete('/:name',(req,res,next)=>{
+router.delete('/:name',
+passport.authenticate('jwt' , {session:false}),
+(req,res,next)=>{
     try{
         const {name} = req.params;
         service.delete(name);

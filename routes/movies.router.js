@@ -1,6 +1,7 @@
 const express = require('express');
 const MovieService = require('./../services/movies.services')
-const boom = require('@hapi/boom')
+const boom = require('@hapi/boom');
+const passport = require('passport');
 
 const router = express.Router();
 const service= new MovieService()
@@ -34,7 +35,9 @@ router.get('/', async(req, res, next)=>{
     }
 })
 
-router.post('/', async(req, res, next)=>{
+router.post('/',
+passport.authenticate('jwt' , {session:false}),
+async(req, res, next)=>{
     try{
         const body = req.body;
         const newMovie = await service.create(body);
@@ -44,7 +47,9 @@ router.post('/', async(req, res, next)=>{
     };
 })
 
-router.put('/:name/:genre', async(req, res, next)=>{
+router.put('/:name/:genre',
+passport.authenticate('jwt' , {session:false}),
+ async(req, res, next)=>{
     try{
         const {name, genre} = req.params;
         const body = req.body;
@@ -59,7 +64,9 @@ router.put('/:name/:genre', async(req, res, next)=>{
     }
 });
 
-router.patch('/:name/:genre', async(req, res, next)=>{
+router.patch('/:name/:genre', 
+passport.authenticate('jwt' , {session:false}),
+async(req, res, next)=>{
     try{
         const {name, genre} = req.params;
         const body = req.body;
@@ -75,7 +82,9 @@ router.patch('/:name/:genre', async(req, res, next)=>{
     }
 });
 
-router.delete('/:name', (req, res, next)=>{
+router.delete('/:name', 
+passport.authenticate('jwt' , {session:false}),
+(req, res, next)=>{
     try{
         const {name} = req.params;
         const done = service.delete(name)
