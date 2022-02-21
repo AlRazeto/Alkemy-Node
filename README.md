@@ -12,7 +12,7 @@ Documentacion en postman: https://web.postman.co/workspace/My-Workspace~5b6fcd2f
 - Para usar la api simplemente  ejecutar en consola un "npm run dev" y luego usar una aplicacion para hacer uso de la API, como Postman o Insomnia ppor ejemplo
 
 
-# Aclaraciónes
-- la base de datos usa los nombres como "primary key", en lugar de IDs, en todos los casos ya que en el modelado de la base de datos dada en el reto no se especificaba una columna de ID. (incluir IDs inconfundibles sería optimo).
+# Aclaraciones
+- la base de datos usa los nombres como "primary key", en lugar de IDs, en todos los casos ya que en el modelado de la base de datos dada en el reto no se especificaba una columna de ID. (incluir IDs inconfundibles sería óptimo).
 - genres no tiene un endpoint, por lo que si se quiere agregar géneros además de los ya incluidos en el seeder, se tendrá que hacer de forma manual en la base de datos o modificando el archivo:  "/db/seeders/20220210184554-create-genres.js". 
 - es importante guardar el token que se retorna al registrase ya que este es requerido para cualquier tipo de modificación de datos.(GEts se pueden hacer sin problema)
