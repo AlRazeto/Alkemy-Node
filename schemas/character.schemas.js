@@ -4,7 +4,7 @@ const name = Joi.string().alphanum();
 const age = Joi.number();
 const weigth = Joi.number();
 const movies = Joi.array();
-const image = Joi.string();
+const image = Joi.any();
 const info = Joi.string().max(300);
 
 

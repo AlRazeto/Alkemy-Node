@@ -2,9 +2,9 @@ const Joi = require('joi')
 
 const title = Joi.string().alphanum();
 const releaseDate = Joi.number();
-const rating = Joi.number().max(5).min(0)
+const rating = Joi.number().max(5).min(1)
 const characters = Joi.array();
-const image = Joi.binary();
+const image = Joi.any();
 const genre = Joi.array();
 
 
