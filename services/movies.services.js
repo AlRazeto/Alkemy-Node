@@ -96,6 +96,9 @@ class MovieService{
             });
             addToCharacters(actor, data.title)
         }
+        if(!newMovie){
+            throw boom.conflict('Movie already exists')
+        }
         return newMovie
     }
     async update(data,id){ 

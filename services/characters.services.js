@@ -57,6 +57,9 @@ class CharacterService {
             });
             addToMovies(movie, data.name)
         }
+        if(!newChar){
+            throw boom.conflict('character already exists')
+        }
         return newChar
     }
     async getAll(){
